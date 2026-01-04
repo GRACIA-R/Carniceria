@@ -25,14 +25,19 @@ productos = pd.read_sql(
 # =========================
 st.subheader("👤 Cliente")
 
+if clientes.empty:
+    st.warning("⚠️ No hay clientes registrados. Registra al menos uno para vender.")
+    st.stop()
+
 cliente_nombre = st.selectbox(
     "Selecciona cliente",
-    clientes["nombre"]
+    clientes["nombre"].tolist()
 )
 
-cliente = clientes[clientes["nombre"] == cliente_nombre].iloc[0]
-cliente_id = cliente["id"]
+cliente = clientes.loc[clientes["nombre"] == cliente_nombre].iloc[0]
+cliente_id = int(cliente["id"])
 lista_precio_id = cliente["lista_precio_id"]
+
 
 # =========================
 # SELECCIÓN DE PRODUCTO
