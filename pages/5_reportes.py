@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 
 from core.inventory import get_inventory, low_stock
-from core.sales import sales_by_day, sales_by_product
 from core.purchases import purchases_by_day
 from core.cashflow import cash_summary
 from core.kpis import kpis_globales
+from core.sales import sales_by_product, sales_by_day
 
 st.header("📊 Reportes y KPIs")
 
