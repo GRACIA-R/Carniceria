@@ -1,8 +1,6 @@
 import streamlit as st
 from core.db import init_db
 
-init_db()
-
 # =========================
 # CONFIGURACIÓN GENERAL
 # =========================
@@ -74,3 +72,4 @@ Carnicería Digital Twin
 Desarrollado en Python + Streamlit  
 Enfoque: control, optimización y escalabilidad
 """)
+init_db()
