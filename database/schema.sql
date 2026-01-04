@@ -1,4 +1,4 @@
-CREATE TABLE productos (
+CREATE TABLE IF NOT EXISTS productos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT UNIQUE,
     costo_kg REAL,
@@ -6,7 +6,7 @@ CREATE TABLE productos (
     stock_kg REAL
 );
 
-CREATE TABLE ventas (
+CREATE TABLE IF NOT EXISTS ventas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fecha TEXT,
     producto_id INTEGER,
@@ -14,7 +14,7 @@ CREATE TABLE ventas (
     total REAL
 );
 
-CREATE TABLE compras (
+CREATE TABLE IF NOT EXISTS compras (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fecha TEXT,
     proveedor TEXT,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS precios_producto (
 
 ALTER TABLE clientes ADD COLUMN lista_precio_id INTEGER;
 
-CREATE TABLE caja (
+CREATE TABLE IF NOT EXISTS caja (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fecha TEXT,
     tipo TEXT,
