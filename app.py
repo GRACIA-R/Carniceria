@@ -72,4 +72,6 @@ Carnicería Digital Twin
 Desarrollado en Python + Streamlit  
 Enfoque: control, optimización y escalabilidad
 """)
-init_db()
+if "db_init" not in st.session_state:
+    init_db()
+    st.session_state.db_init = True
