@@ -1,0 +1,11 @@
+# Base de datos
+database/*.db
+
+# Credenciales
+.env
+
+# Streamlit
+.streamlit/
+
+# Python
+__pycache__/
