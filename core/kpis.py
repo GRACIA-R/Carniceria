@@ -10,11 +10,9 @@ def kpis_globales():
         conn
     ).iloc[0, 0]
 
+    # Compras: asumimos que la tabla guarda el monto directamente
     compras = pd.read_sql(
-        """
-        SELECT COALESCE(SUM(kg * costo), 0) AS total
-        FROM compras
-        """,
+        "SELECT COALESCE(SUM(total), 0) AS total FROM compras",
         conn
     ).iloc[0, 0]
 
@@ -25,7 +23,7 @@ def kpis_globales():
 
     valor_inventario = pd.read_sql(
         """
-        SELECT COALESCE(SUM(stock * costo), 0) AS total
+        SELECT COALESCE(SUM(stock * costo), 0)
         FROM productos
         """,
         conn
