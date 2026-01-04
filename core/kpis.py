@@ -6,29 +6,35 @@ def kpis_globales():
     conn = get_connection()
 
     ventas = pd.read_sql(
-        "SELECT COALESCE(SUM(total), 0) AS total FROM ventas",
+        "SELECT COALESCE(SUM(total), 0) FROM ventas",
         conn
     ).iloc[0, 0]
 
     compras = pd.read_sql(
-        "SELECT COALESCE(SUM(costo_total), 0) AS total FROM compras",
+        """
+        SELECT COALESCE(SUM(cantidad_kg * costo_kg), 0)
+        FROM compras
+        """,
         conn
     ).iloc[0, 0]
 
-    stock_kg = pd.read_sql(
-        "SELECT COALESCE(SUM(stock_kg), 0) AS total FROM productos",
+    stock_total = pd.read_sql(
+        "SELECT COALESCE(SUM(stock), 0) FROM productos",
         conn
     ).iloc[0, 0]
 
     valor_inventario = pd.read_sql(
-        "SELECT COALESCE(SUM(stock_kg * costo_kg), 0) AS total FROM productos",
+        """
+        SELECT COALESCE(SUM(stock * costo), 0)
+        FROM productos
+        """,
         conn
     ).iloc[0, 0]
 
     return {
         "ventas_totales": ventas,
         "compras_totales": compras,
-        "stock_total_kg": stock_kg,
+        "stock_total": stock_total,
         "valor_inventario": valor_inventario,
         "margen_bruto": ventas - compras
     }
@@ -41,17 +47,17 @@ def margen_por_producto():
         """
         SELECT
             nombre,
-            costo_kg,
-            precio_kg,
-            stock_kg,
-            (precio_kg - costo_kg) AS margen_kg,
+            costo,
+            precio,
+            stock,
+            (precio - costo) AS margen_unitario,
             CASE
-                WHEN precio_kg > 0
-                THEN ROUND((precio_kg - costo_kg) / precio_kg * 100, 2)
+                WHEN precio > 0
+                THEN ROUND((precio - costo) / precio * 100, 2)
                 ELSE 0
             END AS margen_pct
         FROM productos
-        ORDER BY margen_kg DESC
+        ORDER BY margen_unitario DESC
         """,
         conn
     )
